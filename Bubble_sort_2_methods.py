@@ -14,6 +14,8 @@ s = 0
 while s != len(l):
     try:
         if l[s] > l[s + 1]:
+            '''WE Can Also Try
+            l[s],l[s+1]=l[s+1],l[s]'''
             temp = l[s]
             l[s] = l[s + 1]
             l[s + 1] = temp
