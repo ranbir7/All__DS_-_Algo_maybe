@@ -1,123 +1,124 @@
-# noinspection PyMethodMayBeStatic
 class BST:
     class node:
         def __init__(self, value):
-            self.left = None
             self.right = None
+            self.left = None
             self.value = value
 
     def __init__(self):
         self.root = None
 
     def insert(self, value):
+        newNode = self.node(value)
         if self.root is None:
-            self.root = self.node(value)
+            self.root = newNode
+            return self
         else:
-            current = self.root
+            rootValue = self.root
             while True:
-                if value > current.value:
-                    # RIGHT
-                    if current.right is None:
-                        current.right = self.node(value)
+                if newNode.value > rootValue.value:
+                    # right child
+                    if rootValue.right is None:
+                        rootValue.right = newNode
                         return self
                     else:
-                        current = current.right
+                        rootValue = rootValue.right
+                elif value == rootValue.value:
+                    return 'Duplicates Are not allowed'
                 else:
-                    if value == current.value:
-                        print('Duplicates are not  Allowed ')
-                        return self
-                    if value < current.value:
-                        # LEFT
-                        if current.left is None:
-                            current.left = self.node(value)
+                    if newNode.value < rootValue.value:
+                        # left child
+                        if rootValue.left is None:
+                            rootValue.left = newNode
                             return self
                         else:
-                            current = current.left
+                            rootValue = rootValue.left
 
     def print_left_then_right(self, start, trc):
         if start is not None:
-            trc += str(start.value) + '-->'
+            trc += str(start.value) + ' --> '
             trc = self.print_left_then_right(start.left, trc)
             trc = self.print_left_then_right(start.right, trc)
         return trc
 
-    def lookup(self, value, start):
+    def lookup(self, value):
+        travel = self.root
         if self.root is None:
-            print('The Tree is empty')
+            print('The tree is empty')
             return
-        else:
-            if value < self.root.value:
-                # LEFT
-                try:
-                    if value == start.value:
-                        try:
-                            print('Node Found', start.value)
-                            print('The Right Value is : ', start.right.value)
-                            print('The left Value is : ', start.left.value)
-                            return
-                        except AttributeError:
-                            print('The Right Value is : None')
-                            print('The Left Value is : None')
+        if value < self.root.value:
+            def look_left(_value, trc):
+                # trc = trc.left
+                if trc is None:
+                    return
+                if _value != trc.value:
+                    look_left(_value, trc.left)
+                    look_left(_value, trc.right)
+                else:
+                    print('Node Found: ', trc.value)
+                    if trc.left is not None:
+                        print('The Left value is:', trc.left.value)
                     else:
-                        self.lookup(value, start.left)
-                except AttributeError:
-                    print('NoneType exception is raised')
-            elif value == self.root.value:
-                try:
-                    print('Node Found', start.value)
-                    print('The Right Value is : ', start.right.value)
-                    print('The left Value is : ', start.left.value)
+                        print('The Left value is:', trc.left)
+                    if trc.right is not None:
+                        print('The right Value is:', trc.right.value)
+                    else:
+                        print('The Right value is:', trc.right)
                     return
-                except AttributeError:
-                    print('The Right Value is : None')
-                    print('The Left Value is : None')
-            else:
-                # RIGHT
-                if value == start.value:
-                    try:
-                        print('Node Found', start.value)
-                        print('The Right Value is : ', start.right.value)
-                        print('The left Value is : ', start.left.value)
-                    except AttributeError:
-                        print('The Right Value is : None')
-                        print('The Left Value is : None')
-                    return
-                else:
-                    self.lookup(value, start.right)
-            '''
-            NEW METHOD
-                if value == start.value:
-                       try:         
-                                print('Node Found',start.value)
-                                print('The Right Value is : ',start.right.value)
-                                print('The left Value is : ', start.left)
-                                return
-                       except AttributeError:
-                                print('The Right Value is : None')
-                                print('The left Value is : None')         
-                else:
-                    self.lookup(value,start.left)
-                    self.lookup(value, start.right)
-            
-            '''
 
-    def remove(self, value, s):
-        pass
+            look_left(value, travel.left)
+        if value == self.root.value:
+            print('Node Found: ', value)
+            if self.root.right is not None:
+                print('The Left value is:', self.root.right.value)
+            else:
+                print('The Left value is:', self.root.left)
+            if self.root.left is not None:
+                print('The right Value is:', self.root.left.value)
+            else:
+                print('The Right value is:', self.root.left)
+            return
+        if value > self.root.value:
+            def look_right(_value, trc):
+                if trc is None:
+                    return
+                if _value != trc.value:
+                    look_right(_value, trc.left)
+                    look_right(_value, trc.right)
+                else:
+                    print('Node Found: ', trc.value)
+                    if trc.left is not None:
+                        print('The Left value is:', trc.left.value)
+                    else:
+                        print('The Left value is:', trc.left)
+                    if trc.right is not None:
+                        print('The right Value is:', trc.right.value)
+                    else:
+                        print('The Right value is:', trc.right)
+                    return
+
+            look_right(value, travel.right)
+
 
 c = BST()
-c.insert(9)
-c.insert(12)
-c.insert(21)
-c.insert(11)
-c.insert(14)
-c.insert(2)
-c.insert(3)
-c.insert(4)
-c.insert(1)
-c.insert(10)
+c.insert(44)
+c.insert(88)
+c.insert(17)
 c.insert(8)
+c.insert(32)
+c.insert(28)
+c.insert(29)
+c.insert(65)
+c.insert(54)
+c.insert(82)
+c.insert(97)
+c.insert(76)
+c.insert(68)
+c.insert(80)
+c.insert(93)
+print(c.print_left_then_right(c.root, ''))
+c.lookup(93)
+print(c.print_left_then_right(c.root, ''))
+# c.remove(12, c.root)
+
 # print(c.print_left_then_right(c.root, ''))
-c.lookup(12, c.root)
-print(c.print_left_then_right(c.root, ''))
-c.remove(12, c.root)
-print(c.print_left_then_right(c.root, ''))
