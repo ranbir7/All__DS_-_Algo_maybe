@@ -43,61 +43,35 @@ class BST:
 
     def lookup(self, value):
         travel = self.root
+
+        def look_(_value, trc):
+            # trc = trc.left
+            if trc is None:
+                return
+            if _value != trc.value:
+                look_(_value, trc.left)
+                look_(_value, trc.right)
+            else:
+                print('Node Found: ', trc.value)
+                if trc.left is not None:
+                    print('The Left value is:', trc.left.value)
+                else:
+                    print('The Left value is:', trc.left)
+                if trc.right is not None:
+                    print('The right Value is:', trc.right.value)
+                else:
+                    print('The Right value is:', trc.right)
+                return
+
         if self.root is None:
             print('The tree is empty')
-            return
         if value < self.root.value:
-            def look_left(_value, trc):
-                # trc = trc.left
-                if trc is None:
-                    return
-                if _value != trc.value:
-                    look_left(_value, trc.left)
-                    look_left(_value, trc.right)
-                else:
-                    print('Node Found: ', trc.value)
-                    if trc.left is not None:
-                        print('The Left value is:', trc.left.value)
-                    else:
-                        print('The Left value is:', trc.left)
-                    if trc.right is not None:
-                        print('The right Value is:', trc.right.value)
-                    else:
-                        print('The Right value is:', trc.right)
-                    return
-
-            look_left(value, travel.left)
+            look_(value, travel.left)
         if value == self.root.value:
-            print('Node Found: ', value)
-            if self.root.right is not None:
-                print('The Left value is:', self.root.right.value)
-            else:
-                print('The Left value is:', self.root.left)
-            if self.root.left is not None:
-                print('The right Value is:', self.root.left.value)
-            else:
-                print('The Right value is:', self.root.left)
-            return
+            look_(value,self.root)
         if value > self.root.value:
-            def look_right(_value, trc):
-                if trc is None:
-                    return
-                if _value != trc.value:
-                    look_right(_value, trc.left)
-                    look_right(_value, trc.right)
-                else:
-                    print('Node Found: ', trc.value)
-                    if trc.left is not None:
-                        print('The Left value is:', trc.left.value)
-                    else:
-                        print('The Left value is:', trc.left)
-                    if trc.right is not None:
-                        print('The right Value is:', trc.right.value)
-                    else:
-                        print('The Right value is:', trc.right)
-                    return
+            look_(value, travel.right)
 
-            look_right(value, travel.right)
 
 
 c = BST()
