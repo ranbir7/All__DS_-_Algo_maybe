@@ -1,45 +1,73 @@
-#PYTHON LINKED LISTTT
-class LinkedList():
-    Lst = {}
-    def __init__(self,head):
-        self.head = head
-        self.next = 12
-        self.Lst={
-            'head' : self.head,
-            'next' : self.next
+class LinkedList:
+    class node:
+        def __init__(self, value):
+            self.value = value
+            self.next = None
 
-            }
-        self.length = 1
-        self.tail = self.head
-    def append(self,value):
-        self.length += 1
-        if self.length > 2:
-            new_dt={
-                'tail' : value,
-                'next' :None
+    def __init__(self):
+        self.head, self.tail = None, None
+        self.length = 0
 
-                }
-            new_val['next'] = new_dt
-            print(self.Lst)
-            return 
-        new_val={
-            'tail' : value,
-            'next'  : None
+    def append(self, value):
+        if self.head is None:
+            self.head = self.node(value)
+        else:
+            t = self.head
+            while True:
+                if t.next is None:
+                    t.next = self.node(value)
+                    break
+                t = t.next
+            self.tail = t.next
+            self.length += 1
 
-            }
-        self.Lst['next']=new_val
+    def print(self):
+        t = self.head
+        try:
+            while t.next:
+                print(t.value, end='-->')
+                t = t.next
+            print(t.value)
+        except:
+            print('No LinkedList Found!')
 
-        
-        self.tail = new_val['tail']
-        print(self.Lst)
+    def sorted_(self):
+        t = self.head
+        val, ref = [], []
+        while t.next:
+            ref.append(t)
+            val.append(t.value)
+            t = t.next
+        ref.append(t)
+        val.append(t.value)
 
-st = LinkedList(10)
-st.append(100)
-st.append(213)
-st.append(11234)
-st.append(4)
-st.append(14)
-#print('The Head Is ',st.head)
-#print('The Tail Is ',st.tail)
-#print('The Length Is ', st.length)
-#print('The Next Pointer Is Pointing To ', st.next)
+        def start(refer, values):
+            for k in range(0, len(refer)):
+                for j in range(0, len(refer)):
+                    if refer[k].value < refer[j].value:
+                        refer[k], refer[j] = refer[j], refer[k]
+                        values[k], values[j] = values[j], values[k]
+            return [refer, values]
+
+        a = start(ref, val)
+        self.head = a[0][0]
+        for i in range(0, len(ref)):
+            try:
+                ref[i].next = ref[i + 1]
+            except:
+                ref[i].next = None
+                break
+        self.print()
+
+
+c = LinkedList()
+c.print()
+c.append(21)
+c.append(1)
+c.append(121)
+c.append(2)
+c.append(543)
+c.append(211)
+c.append(12)
+c.print()
+c.sorted_()
